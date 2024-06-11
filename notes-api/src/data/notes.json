@@ -1,0 +1,100 @@
+{
+  "5c837fa6-3bf6-4e74-ab3a-80b996081d64": [
+    {
+      "color": "yellow",
+      "items": [
+        {
+          "label": "Buy beer",
+          "isDone": false,
+          "id": "7708fbd3-7f3e-4393-bb27-1d3e240f2184"
+        },
+        {
+          "label": "Clean the room",
+          "isDone": false,
+          "id": "dbc6df60-2c1e-487a-be8c-295efb9759cd"
+        },
+        {
+          "label": "Call the plumber",
+          "isDone": true,
+          "id": "8b694ce8-8486-41e5-9096-058f4c1b91de"
+        },
+        {
+          "label": "Throw the garbage out",
+          "isDone": false,
+          "id": "ba5a94a6-598d-4963-b966-d12ea2504ec5"
+        },
+        {
+          "label": "Feed the dog",
+          "isDone": true,
+          "id": "1c0cb5fe-2427-4627-9e36-fe93116f1bae"
+        },
+        {
+          "label": "Buy a car",
+          "isDone": false,
+          "id": "a106687b-6470-4f37-83ec-ec06f0630d42"
+        },
+        {
+          "label": "Visit the Taj Mahal",
+          "isDone": false,
+          "id": "85258812-067a-4d4d-972a-3ed34a2aaa4d"
+        },
+        {
+          "label": "See the Northern Lights",
+          "isDone": false,
+          "id": "6852d4c8-1ef7-4867-8696-be9c68362052"
+        },
+        {
+          "label": "Fly over the Great Barrier Reef",
+          "isDone": false,
+          "id": "28536457-1e1d-442f-bfcf-db2aa18e5311"
+        },
+        {
+          "label": "Read \"JavaScript - The Good Parts\"",
+          "isDone": true,
+          "id": "a218f8ec-5b5c-4987-a5ab-5c8a63cf40e8"
+        },
+        {
+          "label": "Read \"Learning JavaScript Design Patterns\"",
+          "isDone": false,
+          "id": "05f4761c-e442-433b-8e0d-e2304905955e"
+        },
+        {
+          "label": "Read \"CSS: The Definitive Guide\"",
+          "isDone": false,
+          "id": "f8d8b5d9-c5ff-4f2d-8bd5-b8198b2d8594"
+        },
+        {
+          "label": "Watch the Godfather",
+          "isDone": false,
+          "id": "1ec83e55-422e-430e-a9fc-2daed6099eee"
+        },
+        {
+          "label": "Watch The Equalizer",
+          "isDone": false,
+          "id": "1c33ba01-6230-47d1-a2a6-05e3c58d8529"
+        },
+        {
+          "label": "Watch Star Wars",
+          "isDone": false,
+          "id": "53e0e8c4-bdb5-4057-ac9a-c7205559acf6"
+        },
+        {
+          "id": "4c14d834-8e3a-4e91-a15c-6274be882032",
+          "isDone": false,
+          "label": "Buy beer"
+        }
+      ],
+      "id": "9c328eee-807a-4e6b-bcc3-8188cf16b9c0",
+      "title": "TODO list",
+      "creationDate": "2024-03-07T23:55:27.431Z"
+    },
+    {
+      "color": "yellow",
+      "isFavorite": true,
+      "items": [],
+      "id": "3896648c-748e-4e83-b32a-8639f3263c90",
+      "title": "New TODO list",
+      "creationDate": "2024-04-28T15:39:00.466Z"
+    }
+  ]
+}
