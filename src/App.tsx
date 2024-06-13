@@ -6,6 +6,8 @@ import {
   theme
 } from "@chakra-ui/react";
 import { RegistrationForm } from "./components/app-registration/app-registration";
+import ProfilePage from "./components/app-profile/app-profile";
+import { LoginForm } from "./components/app-login/app-login";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -13,7 +15,8 @@ export const App = () => (
       <Container maxWidth="7xl">
         <Routes>
           <Route path="/" element={<RegistrationForm />} />
-          {/* További útvonalak */}
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/profil" element={<ProfilePage />} />
         </Routes>
       </Container>
     </Router>

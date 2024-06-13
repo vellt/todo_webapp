@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Box, Button, FormControl, FormHelperText, FormLabel, Input, useDisclosure } from "@chakra-ui/react";
 import { RegisterUserRequestBody } from "../../models/register-user-request-body";
 import { RegisterUserRequestBodyMessage } from "../../models/register-user-request-body-message";
@@ -14,13 +14,19 @@ export const RegistrationForm: FC = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/profil");
+    }
+  }, [navigate]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value});
   };
 
   const validateField = (name: string, value: string) => {
-    const errors: any = { ...errorMessage };
     let message = "";
 
     switch (name) {
@@ -41,8 +47,7 @@ export const RegistrationForm: FC = () => {
         break;
     }
 
-    errors[name] = message;
-    setErrorMessage(errors);
+    setErrorMessage((prevErrors) => ({ ...prevErrors, [name]: message }));
   };
 
 
@@ -69,7 +74,6 @@ export const RegistrationForm: FC = () => {
           handleCancel();
         }
       } catch (error:any) {
-        // egyéb hiba
         setModalContent({ title: "Regisztrációs hiba", message: error.message });
       } finally {
         onOpen();
