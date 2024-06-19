@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import NoteButton from "../app-notes/create/noteButton";
+import EditNoteButton from "../app-notes/edit/editNoteButton";
+import DeleteNoteButton from "../app-notes/delete/deleteNoteButton";
 
 const ProfilePage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -57,6 +60,16 @@ const ProfilePage: React.FC = () => {
       <Button colorScheme="red" mt={4} onClick={handleLogout}>
         Kijelentkezés
       </Button>
+
+      {/*
+      Ezt a három gombot kell belerakni a kódba és működni fog
+      */}
+
+      <NoteButton />
+      {/*<EditNoteButton noteId={note.id} />*/}
+      {/*<DeleteNoteButton noteId={note.id} />*/}
+
+      {/*********************************************/}
     </Box>
   );
 };
