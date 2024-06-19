@@ -90,6 +90,8 @@ export const LoginForm: FC = () => {
 
       const data = await response.json();
       localStorage.setItem("token", data.accessToken);
+      console.log(data.accessToken);
+      
 
       toast({
         title: "Sikeres bejelentkezés",

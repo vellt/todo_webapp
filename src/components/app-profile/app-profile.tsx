@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import NoteButton from "../app-notes/create/noteButton";
-import EditNoteButton from "../app-notes/edit/editNoteButton";
-import DeleteNoteButton from "../app-notes/delete/deleteNoteButton";
 
 const ProfilePage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -47,6 +45,12 @@ const ProfilePage: React.FC = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
+  const watchList = () =>{
+    navigate("/list");
+  }
+  const searchList = () =>{
+    navigate("/search");
+  }
 
   if (!userData) {
     return <Text>Loading...</Text>;
@@ -57,10 +61,15 @@ const ProfilePage: React.FC = () => {
       <Text>Email: {userData.email}</Text>
       <Text>First Name: {userData.firstName}</Text>
       <Text>Last Name: {userData.lastName}</Text>
-      <Button colorScheme="red" mt={4} onClick={handleLogout}>
+      <Button colorScheme="red" margin={1} mt={4} onClick={handleLogout}>
         Kijelentkezés
       </Button>
-
+      <Button colorScheme="green" margin={1} mt={4} onClick={watchList}>
+        Jegyzetek listázása
+      </Button>
+      <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
+        Jegyzet keresés
+      </Button>
       {/*
       Ezt a három gombot kell belerakni a kódba és működni fog
       */}
@@ -71,7 +80,9 @@ const ProfilePage: React.FC = () => {
 
       {/*********************************************/}
     </Box>
+
   );
+  
 };
 
 export default ProfilePage;
