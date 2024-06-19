@@ -25,12 +25,15 @@ const DeleteNoteModal: React.FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNo
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/notes/${noteId}`, {
+            const response = await fetch(`http://localhost:5000/notes/${noteId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
+
+            console.log(response);
+            
 
             if (response.status === 204) {
                 onNoteDeleted();

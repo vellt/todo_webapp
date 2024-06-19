@@ -5,9 +5,10 @@ import DeleteNoteModal from "./deleteNoteModal";
 
 interface DeleteNoteButtonProps {
     noteId: string;
+    onClick: () => void;  // callback függvény, a képernyőfrisstéshez
 }
 
-const DeleteNoteButton: React.FC<DeleteNoteButtonProps> = ({ noteId }) => {
+const DeleteNoteButton: React.FC<DeleteNoteButtonProps> = ({ noteId, onClick }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const DeleteNoteButton: React.FC<DeleteNoteButtonProps> = ({ noteId }) => {
             isClosable: true,
         });
         onClose();
-
+        onClick();  // callback függvényt itt hívjuk meg
     };
 
     const handleDeleteNoteClick = () => {

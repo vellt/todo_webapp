@@ -5,6 +5,8 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import EditNoteButton from '../app-notes/edit/editNoteButton';
+import DeleteNoteButton from '../app-notes/delete/deleteNoteButton';
 
 const SearchNotes: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -19,7 +21,7 @@ const SearchNotes: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSearch = async () => {
+  const fetchNotes  = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
       console.error('No token found');
@@ -134,7 +136,7 @@ const SearchNotes: React.FC = () => {
           </Select>
         </FormControl>
         <Stack direction="row" spacing={4}>
-          <Button onClick={handleSearch} margin="auto" colorScheme="green" width={200}>
+          <Button onClick={fetchNotes} margin="auto" colorScheme="green" width={200}>
             Keresés
           </Button>
           <Button onClick={handleClear} margin="auto" colorScheme="red" width={200}>
@@ -151,36 +153,40 @@ const SearchNotes: React.FC = () => {
         <Text color="red.500">{error}</Text>
       ) : (
         <Box>
-          {notes.map((note) => (
-            <Box key={note.id} mb={4} p={4} borderWidth="1px" borderRadius="lg">
-              <Flex justify="space-between">
-                <Text fontSize="xl">{note.title}</Text>
-                {note.isFavorite && (
-                  <Text as="span" color="yellow.500">★</Text>
-                )}
-              </Flex>
-              <Text mt={2} color="gray.500">
-                Created: {new Date(note.creationDate).toLocaleDateString()}
-              </Text>
-              <Stack mt={4}>
-                {note.items
-                  .filter((item: any) => item.label.includes(query)) // Filter items based on the query
-                  .map((item: any) => (
-                    <Flex key={item.id} align="center" justify="space-between">
-                      <Text textDecoration={item.isDone ? 'line-through' : 'none'}>
-                        {item.label}
-                      </Text>
-                      {item.isDone && (
-                        <Box as="span" color="gray.500" ml={2}>
-                          (Done)
-                        </Box>
-                      )}
-                    </Flex>
-                  ))}
+        {notes.map((note) => (
+          <Box key={note.id} mb={4} p={4} borderWidth="1px" borderRadius="lg">
+            <Flex justify="space-between" align="center">
+              <Text fontSize="xl">{note.title}</Text>
+              <Stack direction="row" spacing={2}>
+                <EditNoteButton noteId={note.id} onClick={fetchNotes } />
+                <DeleteNoteButton noteId={note.id} onClick={fetchNotes } />
               </Stack>
-            </Box>
-          ))}
-        </Box>
+            </Flex>
+            {note.isFavorite && (
+              <Text as="span" color="yellow.500">★</Text>
+            )}
+            <Text mt={2} color="gray.500">
+              Created: {new Date(note.creationDate).toLocaleDateString()}
+            </Text>
+            <Stack mt={4}>
+              {note.items
+                .filter((item: any) => item.label.includes(query))
+                .map((item: any) => (
+                  <Flex key={item.id} align="center" justify="space-between">
+                    <Text textDecoration={item.isDone ? 'line-through' : 'none'}>
+                      {item.label}
+                    </Text>
+                    {item.isDone && (
+                      <Box as="span" color="gray.500" ml={2}>
+                        (Done)
+                      </Box>
+                    )}
+                  </Flex>
+                ))}
+            </Stack>
+          </Box>
+        ))}
+      </Box>
       )}
     </Box>
   );

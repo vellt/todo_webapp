@@ -25,9 +25,15 @@ const TaskListPage: React.FC = () => {
 
       const response = await fetch(`http://localhost:5000/notes?orderBy=${orderBy}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         }
       });
+
+      console.log(orderBy);
+      
+      console.log(token);
+      
 
       if (!response.ok) {
         if (response.status === 401) {
