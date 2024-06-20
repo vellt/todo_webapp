@@ -11,6 +11,7 @@ import DeleteNoteButton from '../app-notes/delete/deleteNoteButton';
 import CreateNoteModal from '../app-notes/create/createNotes';
 import './starStyle.css';
 import NoteButton from '../app-notes/create/noteButton';
+import TaskDelete from '../app-task-delete/app-task-delete';
 
 const SearchNotes: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -200,9 +201,12 @@ const SearchNotes: React.FC = () => {
                   .filter((item: any) => item.label.includes(query))
                   .map((item: any) => (
                     <Flex key={item.id} align="center" justify="space-between">
+                      <Stack>
                       <Text textDecoration={item.isDone ? 'line-through' : 'none'}>
                         {item.label}
                       </Text>
+                      <TaskDelete taskid={item.id} notesid={note.id} onClick={fetchNotes}/>
+                      </Stack>
                       {item.isDone && (
                         <Box as="span" color="gray.500" ml={2}>
                           (Done)
