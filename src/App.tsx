@@ -8,7 +8,7 @@ import {
 import { RegistrationForm } from "./components/app-registration/app-registration";
 import ProfilePage from "./components/app-profile/app-profile";
 import { LoginForm } from "./components/app-login/app-login";
-import SearchNotes from "./components/app-search-todo/app-search-todo";
+import SearchNotes from "./components/app-notes-list/app-notes-list";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -18,7 +18,7 @@ export const App = () => (
           <Route path="/" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/profil" element={<ProfilePage />}/>
-          <Route path="/search" element={<SearchNotes/>}/>
+          <Route path="/notes-list" element={<SearchNotes/>}/>
         </Routes>
       </Container>
     </Router>

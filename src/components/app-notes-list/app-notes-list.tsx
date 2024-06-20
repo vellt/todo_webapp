@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box, Input, Button, Stack, Checkbox, Select, Text,
-  Flex, FormControl, FormLabel, Spinner
+  Flex, FormControl, FormLabel, Spinner,
+  Collapse
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import EditNoteButton from '../app-notes/edit/editNoteButton';
 import DeleteNoteButton from '../app-notes/delete/deleteNoteButton';
 import CreateNoteModal from '../app-notes/create/createNotes';
 import './starStyle.css';
+import NoteButton from '../app-notes/create/noteButton';
 
 const SearchNotes: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -22,6 +24,12 @@ const SearchNotes: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
 
   const fetchNotes = async () => {
     const token = localStorage.getItem('token');
@@ -80,9 +88,19 @@ const SearchNotes: React.FC = () => {
     setError(null);
   };
 
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   return (
     <Box p={4}>
-      <Stack spacing={4} mb={4}>
+      <Button onClick={toggleSearch} marginBottom={4}>
+        {isSearchOpen ? 'Keresés bezárása' : 'Keresés'}
+      </Button>
+      <Collapse in={isSearchOpen} animateOpacity>
+        <Box mb={4} p={4} borderWidth="1px" borderRadius="lg">
+        <Stack spacing={4} mb={4}>
         <FormControl>
           <FormLabel>Keresési érték</FormLabel>
           <Input
@@ -142,20 +160,24 @@ const SearchNotes: React.FC = () => {
           <Button onClick={fetchNotes} margin="auto" colorScheme="green" width={200}>
             Keresés
           </Button>
-          <Button onClick={handleClear} margin="auto" colorScheme="red" width={200}>
-            Törlés
-          </Button>
-          <Button as={Link} to="/profil" margin="auto" colorScheme="blue" width={200}>
-            Vissza
+          <Button onClick={handleClear} margin="auto" colorScheme="red" width={300}>
+            Keresési értékek visszaállítása
           </Button>
         </Stack>
       </Stack>
+        </Box>
+      </Collapse>
+      
       {loading ? (
         <Spinner />
       ) : error ? (
         <Text color="red.500">{error}</Text>
       ) : (
-        <Box>
+        <Box mb={4} p={4} borderWidth="1px" borderRadius="lg" >
+          <Box  marginBottom={5}>
+              <NoteButton onClick={fetchNotes}/>
+          </Box>
+          <Box>
           {notes.map((note) => (
             <Box key={note.id} mb={4} p={4} borderWidth="1px" color="black" borderRadius="lg" bg={note.color}>
               <Flex justify="space-between" align="center">
@@ -191,6 +213,7 @@ const SearchNotes: React.FC = () => {
               </Stack>
             </Box>
           ))}
+        </Box>
         </Box>
       )}
     </Box>

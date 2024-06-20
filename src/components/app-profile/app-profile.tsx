@@ -46,7 +46,7 @@ const ProfilePage: React.FC = () => {
     navigate("/login");
   };
   const searchList = () =>{
-    navigate("/search");
+    navigate("/notes-list");
   }
 
   if (!userData) {
@@ -62,17 +62,8 @@ const ProfilePage: React.FC = () => {
         Kijelentkezés
       </Button>
       <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
-        Jegyzet keresés
+        Jegyzeteim
       </Button>
-      {/*
-      Ezt a három gombot kell belerakni a kódba és működni fog
-      */}
-
-      <NoteButton />
-      {/*<EditNoteButton noteId={note.id} />*/}
-      {/*<DeleteNoteButton noteId={note.id} />*/}
-
-      {/*********************************************/}
     </Box>
 
   );
