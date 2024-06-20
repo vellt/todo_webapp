@@ -128,7 +128,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={onClose} mr={3}>Mégse</Button>
-                        <Button colorScheme="teal" type="submit">Jóváhagyás</Button>
+                        <Button colorScheme="teal" type="submit">Rögzítés</Button>
                     </ModalFooter>
                 </form>
             </ModalContent>
