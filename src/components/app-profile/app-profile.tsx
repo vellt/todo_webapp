@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import NoteButton from "../app-notes/create/noteButton";
+import ProfileButton from "../app-profile-data-edit/app-profile-edit-data-button";
+import PasswordChangeButton from "../app-profile-pwd-change/app-profile-pwd-edit-button";
 
 const ProfilePage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -64,6 +66,8 @@ const ProfilePage: React.FC = () => {
       <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
         Jegyzeteim
       </Button>
+      <ProfileButton initialFirstName={userData.firstName} initialLastName={userData.lastName}/>
+      <PasswordChangeButton/>
     </Box>
 
   );
