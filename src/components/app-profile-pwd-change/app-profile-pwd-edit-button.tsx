@@ -35,7 +35,7 @@ const PasswordChangeButton: React.FC = () => {
 
     return (
         <>
-            <Button onClick={handleOpenPasswordChangeModal} colorScheme="orange" mt={4}>
+            <Button onClick={handleOpenPasswordChangeModal} colorScheme="orange" margin={1} mt={4}>
                 Jelszó megváltoztatása
             </Button>
             <ChangePasswordForm

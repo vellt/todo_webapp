@@ -9,36 +9,38 @@ const ProfilePage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
 
+  const fetchUserData = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const data = await response.json();
+      setUserData(data);
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:5000/user", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-
-        const data = await response.json();
-        setUserData(data);
-      } catch (error) {
-        console.error(error);
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
-    };
+    
 
     fetchUserData();
   }, [navigate]);
@@ -66,8 +68,8 @@ const ProfilePage: React.FC = () => {
       <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
         Jegyzeteim
       </Button>
-      <ProfileButton initialFirstName={userData.firstName} initialLastName={userData.lastName}/>
-      <PasswordChangeButton/>
+      <ProfileButton onClick={fetchUserData} initialFirstName={userData.firstName} initialLastName={userData.lastName}/>
+      <PasswordChangeButton />
     </Box>
 
   );
