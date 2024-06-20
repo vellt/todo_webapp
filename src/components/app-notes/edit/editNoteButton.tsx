@@ -5,7 +5,7 @@ import EditNoteModal from "./editNoteModal";
 
 interface EditNoteButtonProps {
     noteId: string;
-    onClick: () => void;  // callback függvény, a képernyőfrisstéshez
+    onClick: () => void;
 }
 
 const EditNoteButton: React.FC<EditNoteButtonProps> = ({ noteId, onClick }) => {
@@ -13,16 +13,26 @@ const EditNoteButton: React.FC<EditNoteButtonProps> = ({ noteId, onClick }) => {
     const toast = useToast();
     const navigate = useNavigate();
 
-    const handleNoteEdited = (note: any) => {
-        toast({
-            title: "Jegyzet módosítva.",
-            description: `A(z) "${note.title}" jegyzet sikeresen módosítva.`,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-        });
-        onClose();
-        onClick();  // callback függvényt itt hívjuk meg
+    const handleNoteEdited = (note: any, error: string | null = null) => {
+        if (error) {
+            toast({
+                title: "Hiba történt.",
+                description: error,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Jegyzet módosítva.",
+                description: `A(z) "${note.title}" jegyzet sikeresen módosítva.`,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+            onClose();
+            onClick();
+        }
     };
 
     const handleEditNoteClick = () => {
