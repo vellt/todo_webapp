@@ -7,7 +7,11 @@ import {
 } from "@chakra-ui/react";
 import CreateNoteModal from "./createNotes"; // importáld a CreateNoteModal komponenst
 
-const NoteButton: React.FC = () => {
+interface NoteButtonProps {
+    onClick: () => void;  // callback függvény, a képernyőfrisstéshez
+}
+
+const NoteButton: React.FC<NoteButtonProps> = ({ onClick }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const navigate = useNavigate();
@@ -21,7 +25,7 @@ const NoteButton: React.FC = () => {
             isClosable: true,
         });
         onClose();
-        // itt frissítheted a keresési listát ha szükséges
+        onClick();  // callback függvényt itt hívjuk meg
     };
 
     const handleCreateNoteClick = () => {
@@ -35,7 +39,7 @@ const NoteButton: React.FC = () => {
 
     return (
         <>
-            <Button onClick={handleCreateNoteClick} colorScheme="teal" mt={4}>
+            <Button width="100%"  onClick={handleCreateNoteClick} colorScheme="teal" mt={4}>
                 Új jegyzet létrehozása
             </Button>
             <CreateNoteModal isOpen={isOpen} onClose={onClose} onNoteCreated={handleNoteCreated} />

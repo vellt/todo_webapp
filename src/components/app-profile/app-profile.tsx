@@ -45,11 +45,8 @@ const ProfilePage: React.FC = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const watchList = () =>{
-    navigate("/list");
-  }
   const searchList = () =>{
-    navigate("/search");
+    navigate("/notes-list");
   }
 
   if (!userData) {
@@ -64,21 +61,9 @@ const ProfilePage: React.FC = () => {
       <Button colorScheme="red" margin={1} mt={4} onClick={handleLogout}>
         Kijelentkezés
       </Button>
-      <Button colorScheme="green" margin={1} mt={4} onClick={watchList}>
-        Jegyzetek listázása
-      </Button>
       <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
-        Jegyzet keresés
+        Jegyzeteim
       </Button>
-      {/*
-      Ezt a három gombot kell belerakni a kódba és működni fog
-      */}
-
-      <NoteButton />
-      {/*<EditNoteButton noteId={note.id} />*/}
-      {/*<DeleteNoteButton noteId={note.id} />*/}
-
-      {/*********************************************/}
     </Box>
 
   );
