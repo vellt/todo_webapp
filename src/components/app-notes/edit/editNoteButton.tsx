@@ -37,7 +37,7 @@ const EditNoteButton: React.FC<EditNoteButtonProps> = ({ noteId, onClick }) => {
     return (
         <>
             <Button onClick={handleEditNoteClick} colorScheme="blue" mt={4}>
-                Edit note
+                Szerkesztés
             </Button>
             <EditNoteModal isOpen={isOpen} onClose={onClose} onNoteEdited={handleNoteEdited} noteId={noteId} />
         </>

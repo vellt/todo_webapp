@@ -8,7 +8,6 @@ import {
 import { RegistrationForm } from "./components/app-registration/app-registration";
 import ProfilePage from "./components/app-profile/app-profile";
 import { LoginForm } from "./components/app-login/app-login";
-import TaskListPage from "./components/app-list-todo/app-list-todo";
 import SearchNotes from "./components/app-search-todo/app-search-todo";
 
 export const App = () => (
@@ -19,7 +18,6 @@ export const App = () => (
           <Route path="/" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/profil" element={<ProfilePage />}/>
-          <Route path="/list" element={<TaskListPage/>}/>
           <Route path="/search" element={<SearchNotes/>}/>
         </Routes>
       </Container>

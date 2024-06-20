@@ -45,9 +45,6 @@ const ProfilePage: React.FC = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const watchList = () =>{
-    navigate("/list");
-  }
   const searchList = () =>{
     navigate("/search");
   }
@@ -63,9 +60,6 @@ const ProfilePage: React.FC = () => {
       <Text>Last Name: {userData.lastName}</Text>
       <Button colorScheme="red" margin={1} mt={4} onClick={handleLogout}>
         Kijelentkezés
-      </Button>
-      <Button colorScheme="green" margin={1} mt={4} onClick={watchList}>
-        Jegyzetek listázása
       </Button>
       <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
         Jegyzet keresés

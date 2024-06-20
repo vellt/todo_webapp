@@ -1,0 +1,10 @@
+.outline-star {
+    font-size: 20px;
+    color: transparent;
+    -webkit-text-stroke: 1px black;
+  }
+
+  .full-star{
+    font-size: 20px;
+    color: black;
+  }
