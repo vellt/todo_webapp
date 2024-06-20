@@ -25,6 +25,10 @@ const DeleteNoteModal: React.FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNo
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('Nem található érvényes token. Kérjük, jelentkezzen be újra.');
+            }
+
             const response = await fetch(`http://localhost:5000/notes/${noteId}`, {
                 method: 'DELETE',
                 headers: {
@@ -32,11 +36,12 @@ const DeleteNoteModal: React.FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNo
                 }
             });
 
-            console.log(response);
-            
-
             if (response.status === 204) {
                 onNoteDeleted();
+            } else if (response.status === 404) {
+                throw new Error('A jegyzet nem található.');
+            } else if (response.status === 403) {
+                throw new Error('Nincs jogosultsága a jegyzet törléséhez.');
             } else {
                 throw new Error('A jegyzet törlése sikertelen.');
             }

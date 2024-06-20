@@ -26,7 +26,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('yellow');
     const [isFavorite, setIsFavorite] = useState(false);
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const resetForm = () => {
         setTitle('');
@@ -42,7 +42,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
     }, [isOpen]);
 
     const validate = () => {
-        const newErrors: any = {};
+        const newErrors: { [key: string]: string } = {};
         if (!title) {
             newErrors.title = 'A cím megadása kötelező.';
         } else if (title.length < 3) {
@@ -71,16 +71,21 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
                 body: JSON.stringify({ title, color, isFavorite })
             });
 
-            if (response.status === 201) {
+            if (response.ok) {
                 const note = await response.json();
                 onNoteCreated(note);
+                onClose();
             } else if (response.status === 409) {
-                setErrors({ title: 'Conflict - a megadott jegyzet már létezik ilyen címmel' });
+                const errorData = await response.json();
+                onNoteCreated({ error: errorData.message || 'Conflict - a megadott jegyzet már létezik ilyen címmel' });
+            } else if (response.status >= 500) {
+                onNoteCreated({ error: 'Szerver oldali hiba történt. Kérjük, próbálja újra később.' });
             } else {
-                throw new Error('Ismeretlen hiba történt.');
+                const errorData = await response.json();
+                onNoteCreated({ error: errorData.message || 'Ismeretlen hiba történt.' });
             }
         } catch (error: any) {
-            setErrors({ form: error.message });
+            onNoteCreated({ error: error.message || 'Ismeretlen hiba történt.' });
         }
     };
 
@@ -88,31 +93,31 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Create new note</ModalHeader>
+                <ModalHeader>Jegyzet létrehozása</ModalHeader>
                 <ModalCloseButton />
                 <form onSubmit={handleSubmit}>
                     <ModalBody>
                         <FormControl isInvalid={!!errors.title}>
-                            <FormLabel>Title</FormLabel>
+                            <FormLabel>Cím</FormLabel>
                             <Input
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                placeholder="Title"
+                                placeholder="Cím"
                             />
                             <FormErrorMessage>{errors.title}</FormErrorMessage>
                         </FormControl>
                         <FormControl mt={4}>
-                            <FormLabel>Color</FormLabel>
+                            <FormLabel>Szín</FormLabel>
                             <Select value={color} onChange={(e) => setColor(e.target.value)}>
-                                <option value="yellow">yellow</option>
-                                <option value="green">green</option>
-                                <option value="blue">blue</option>
-                                <option value="red">red</option>
+                                <option value="yellow">sárga</option>
+                                <option value="green">zöld</option>
+                                <option value="blue">kék</option>
+                                <option value="red">piros</option>
                             </Select>
                         </FormControl>
                         <FormControl mt={4}>
                             <Checkbox isChecked={isFavorite} onChange={(e) => setIsFavorite(e.target.checked)}>
-                                Favorite
+                                Kedvenc
                             </Checkbox>
                         </FormControl>
                         {errors.form && (
@@ -123,7 +128,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={onClose} mr={3}>Mégse</Button>
-                        <Button colorScheme="teal" type="submit">Create</Button>
+                        <Button colorScheme="teal" type="submit">Rögzítés</Button>
                     </ModalFooter>
                 </form>
             </ModalContent>

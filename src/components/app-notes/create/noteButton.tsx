@@ -5,10 +5,10 @@ import {
     useDisclosure,
     useToast
 } from "@chakra-ui/react";
-import CreateNoteModal from "./createNotes"; // importáld a CreateNoteModal komponenst
+import CreateNoteModal from "./createNotes";
 
 interface NoteButtonProps {
-    onClick: () => void;  // callback függvény, a képernyőfrisstéshez
+    onClick: () => void;
 }
 
 const NoteButton: React.FC<NoteButtonProps> = ({ onClick }) => {
@@ -17,15 +17,25 @@ const NoteButton: React.FC<NoteButtonProps> = ({ onClick }) => {
     const navigate = useNavigate();
 
     const handleNoteCreated = (note: any) => {
-        toast({
-            title: "Jegyzet létrehozva.",
-            description: `A(z) "${note.title}" jegyzet sikeresen létrehozva.`,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-        });
-        onClose();
-        onClick();  // callback függvényt itt hívjuk meg
+        if (note.error) {
+            toast({
+                title: "Hiba történt.",
+                description: note.error,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: "Jegyzet létrehozva.",
+                description: `A(z) "${note.title}" jegyzet sikeresen létrehozva.`,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+            onClose();
+            onClick();
+        }
     };
 
     const handleCreateNoteClick = () => {
@@ -39,7 +49,7 @@ const NoteButton: React.FC<NoteButtonProps> = ({ onClick }) => {
 
     return (
         <>
-            <Button width="100%"  onClick={handleCreateNoteClick} colorScheme="teal" mt={4}>
+            <Button width="100%" onClick={handleCreateNoteClick} colorScheme="teal" mt={4}>
                 Új jegyzet létrehozása
             </Button>
             <CreateNoteModal isOpen={isOpen} onClose={onClose} onNoteCreated={handleNoteCreated} />
