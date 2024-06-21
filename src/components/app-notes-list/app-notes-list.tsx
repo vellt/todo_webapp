@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Box, Input, Button, Stack, Checkbox, Select, Text,
   Flex, FormControl, FormLabel, Spinner,
   Collapse
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import EditNoteButton from '../app-notes/edit/editNoteButton';
 import DeleteNoteButton from '../app-notes/delete/deleteNoteButton';
-import CreateNoteModal from '../app-notes/create/createNotes';
 import './starStyle.css';
 import NoteButton from '../app-notes/create/noteButton';
 import TaskDelete from '../app-task-delete/app-task-delete';
 
-const SearchNotes: React.FC = () => {
+const SearchNotes: FC = () => {
   const [query, setQuery] = useState('');
   const [after, setAfter] = useState('');
   const [before, setBefore] = useState('');
@@ -33,14 +31,8 @@ const SearchNotes: React.FC = () => {
 
 
   const fetchNotes = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('No token found');
-      navigate('/login');
-      return;
-    }
 
-    let url = `http://localhost:5000/notes?query=${query}&orderBy=${orderBy}`;
+    let url = `${process.env.REACT_APP_API_URL}/notes?query=${query}&orderBy=${orderBy}`;
     if (after) url += `&after=${after}`;
     if (before) url += `&before=${before}`;
     if (favorites) url += `&favorites=true`;
@@ -53,7 +45,7 @@ const SearchNotes: React.FC = () => {
     try {
       const response = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
 

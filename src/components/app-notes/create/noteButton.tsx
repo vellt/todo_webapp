@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Button,
@@ -11,7 +11,7 @@ interface NoteButtonProps {
     onClick: () => void;
 }
 
-const NoteButton: React.FC<NoteButtonProps> = ({ onClick }) => {
+const NoteButton: FC<NoteButtonProps> = ({ onClick }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const navigate = useNavigate();
@@ -39,12 +39,7 @@ const NoteButton: React.FC<NoteButtonProps> = ({ onClick }) => {
     };
 
     const handleCreateNoteClick = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            onOpen();
-        } else {
-            navigate('/login');
-        }
+        onOpen();
     };
 
     return (

@@ -1,14 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { Box, Button, Text, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast } from '@chakra-ui/react';
 
 interface TaskDeleteProps {
-    taskid: string; notesid: string;
-    onClick: () => void; // callback függvény, a képernyőfrisstéshez
-    }
+  taskid: string; notesid: string;
+  onClick: () => void; // callback függvény, a képernyőfrisstéshez
+}
 
-    const TaskDelete : React.FC<TaskDeleteProps> = ({ taskid, notesid, onClick }) => {
-        const { isOpen, onOpen, onClose } = useDisclosure();
+const TaskDelete : FC<TaskDeleteProps> = ({ taskid, notesid, onClick }) => {
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
   const toast = useToast();
 
@@ -26,7 +25,7 @@ interface TaskDeleteProps {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/notes/${notesid}/${taskid}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/notes/${notesid}/${taskid}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

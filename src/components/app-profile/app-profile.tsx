@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import NoteButton from "../app-notes/create/noteButton";
 import ProfileButton from "../app-profile-data-edit/app-profile-edit-data-button";
 import PasswordChangeButton from "../app-profile-pwd-change/app-profile-pwd-edit-button";
 
-const ProfilePage: React.FC = () => {
+const ProfilePage: FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
 
   const fetchUserData = async () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
     try {
-      const response = await fetch("http://localhost:5000/user", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
@@ -40,8 +32,6 @@ const ProfilePage: React.FC = () => {
   };
 
   useEffect(() => {
-    
-
     fetchUserData();
   }, [navigate]);
 
@@ -62,14 +52,16 @@ const ProfilePage: React.FC = () => {
       <Text>Email: {userData.email}</Text>
       <Text>First Name: {userData.firstName}</Text>
       <Text>Last Name: {userData.lastName}</Text>
-      <Button colorScheme="red" margin={1} mt={4} onClick={handleLogout}>
-        Kijelentkezés
+     <Box>
+      <Button width="100%" colorScheme="blue" margin={1} mt={4} onClick={searchList}>
+          Jegyzeteim
       </Button>
-      <Button colorScheme="blue" margin={1} mt={4} onClick={searchList}>
-        Jegyzeteim
-      </Button>
+     </Box>
       <ProfileButton onClick={fetchUserData} initialFirstName={userData.firstName} initialLastName={userData.lastName}/>
       <PasswordChangeButton />
+      <Button width="100%" colorScheme="red" margin={1} mt={4} onClick={handleLogout}>
+        Kijelentkezés
+      </Button>
     </Box>
 
   );

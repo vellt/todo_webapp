@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -20,7 +20,7 @@ interface ChangePasswordFormProps {
     onPasswordChanged: () => void;
 }
 
-const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ isOpen, onClose, onPasswordChanged }) => {
+const ChangePasswordForm: FC<ChangePasswordFormProps> = ({ isOpen, onClose, onPasswordChanged }) => {
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -75,7 +75,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ isOpen, onClose
         }
 
         try {
-            const response = await fetch('http://localhost:5000/user/login', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

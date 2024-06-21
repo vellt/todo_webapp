@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDisclosure, Button, useToast } from "@chakra-ui/react";
 import { useNavigate } from 'react-router-dom';
 import DeleteNoteModal from "./deleteNoteModal";
@@ -8,7 +8,7 @@ interface DeleteNoteButtonProps {
     onClick: () => void;
 }
 
-const DeleteNoteButton: React.FC<DeleteNoteButtonProps> = ({ noteId, onClick }) => {
+const DeleteNoteButton: FC<DeleteNoteButtonProps> = ({ noteId, onClick }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const navigate = useNavigate();
@@ -36,12 +36,7 @@ const DeleteNoteButton: React.FC<DeleteNoteButtonProps> = ({ noteId, onClick }) 
     };
 
     const handleDeleteNoteClick = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            onOpen();
-        } else {
-            navigate('/login');
-        }
+        onOpen();
     };
 
     return (

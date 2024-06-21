@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    Box,
     Button,
+    Stack,
     useDisclosure,
     useToast
 } from "@chakra-ui/react";
@@ -13,7 +15,7 @@ interface ProfileButtonProps {
     onClick: () => void;  // callback függvény, a képernyőfrisstéshez
 }
 
-const ProfileButton: React.FC<ProfileButtonProps> = ({ initialFirstName, initialLastName, onClick }) => {
+const ProfileButton: FC<ProfileButtonProps> = ({ initialFirstName, initialLastName, onClick }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const navigate = useNavigate();
@@ -31,17 +33,12 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({ initialFirstName, initial
     };
 
     const handleOpenProfileModal = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            onOpen();
-        } else {
-            navigate('/login');
-        }
+        onOpen();
     };
 
     return (
-        <>
-            <Button onClick={handleOpenProfileModal} colorScheme="purple" margin={1} mt={4}>
+        <Box >
+            <Button width="100%" onClick={handleOpenProfileModal} colorScheme="purple" margin={1} mt={4}>
                 Profil frissítése
             </Button>
             <UserProfileForm
@@ -51,7 +48,7 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({ initialFirstName, initial
                 initialFirstName={initialFirstName}
                 initialLastName={initialLastName}
             />
-        </>
+        </Box>
     );
 };
 
