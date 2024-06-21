@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    Box,
     Button,
     useDisclosure,
     useToast
@@ -8,7 +9,7 @@ import {
 import ChangePasswordForm from './app-profile-pwd-edit';
 
 
-const PasswordChangeButton: React.FC = () => {
+const PasswordChangeButton: FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
     const navigate = useNavigate();
@@ -25,17 +26,12 @@ const PasswordChangeButton: React.FC = () => {
     };
 
     const handleOpenPasswordChangeModal = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            onOpen();
-        } else {
-            navigate('/login');
-        }
+        onOpen();
     };
 
     return (
-        <>
-            <Button onClick={handleOpenPasswordChangeModal} colorScheme="orange" margin={1} mt={4}>
+        <Box>
+            <Button width="100%" onClick={handleOpenPasswordChangeModal} colorScheme="orange" margin={1} mt={4}>
                 Jelszó megváltoztatása
             </Button>
             <ChangePasswordForm
@@ -43,7 +39,7 @@ const PasswordChangeButton: React.FC = () => {
                 onClose={onClose}
                 onPasswordChanged={handlePasswordChanged}
             />
-        </>
+        </Box>
     );
 };
 

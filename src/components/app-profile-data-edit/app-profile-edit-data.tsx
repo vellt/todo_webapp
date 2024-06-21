@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -22,7 +22,7 @@ interface UserProfileFormProps {
     initialLastName: string;
 }
 
-const UserProfileForm: React.FC<UserProfileFormProps> = ({ isOpen, onClose, onProfileUpdated, initialFirstName, initialLastName }) => {
+const UserProfileForm: FC<UserProfileFormProps> = ({ isOpen, onClose, onProfileUpdated, initialFirstName, initialLastName }) => {
     const [firstName, setFirstName] = useState(initialFirstName);
     const [lastName, setLastName] = useState(initialLastName);
     const [error, setError] = useState<any>({});
@@ -59,7 +59,7 @@ const UserProfileForm: React.FC<UserProfileFormProps> = ({ isOpen, onClose, onPr
         }
 
         try {
-            const response = await fetch('http://localhost:5000/user', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -22,7 +22,7 @@ interface CreateNoteModalProps {
     onNoteCreated: (note: any) => void;
 }
 
-const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNoteCreated }) => {
+const CreateNoteModal: FC<CreateNoteModalProps> = ({ isOpen, onClose, onNoteCreated }) => {
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('yellow');
     const [isFavorite, setIsFavorite] = useState(false);
@@ -62,7 +62,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onNo
         }
 
         try {
-            const response = await fetch('http://localhost:5000/notes', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/notes`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

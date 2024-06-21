@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -23,7 +23,7 @@ interface EditNoteModalProps {
     noteId: string;
 }
 
-const EditNoteModal: React.FC<EditNoteModalProps> = ({ isOpen, onClose, onNoteEdited, noteId }) => {
+const EditNoteModal: FC<EditNoteModalProps> = ({ isOpen, onClose, onNoteEdited, noteId }) => {
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('yellow');
     const [isFavorite, setIsFavorite] = useState(false);
@@ -33,7 +33,7 @@ const EditNoteModal: React.FC<EditNoteModalProps> = ({ isOpen, onClose, onNoteEd
         const fetchNote = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch(`http://localhost:5000/notes/${noteId}`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/notes/${noteId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

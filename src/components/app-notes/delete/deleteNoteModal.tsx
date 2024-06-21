@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -19,7 +19,7 @@ interface DeleteNoteModalProps {
     noteId: string;
 }
 
-const DeleteNoteModal: React.FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNoteDeleted, noteId }) => {
+const DeleteNoteModal: FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNoteDeleted, noteId }) => {
     const toast = useToast();
 
     const handleDelete = async () => {
@@ -29,7 +29,7 @@ const DeleteNoteModal: React.FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNo
                 throw new Error('Nem található érvényes token. Kérjük, jelentkezzen be újra.');
             }
 
-            const response = await fetch(`http://localhost:5000/notes/${noteId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/notes/${noteId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

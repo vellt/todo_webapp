@@ -1,23 +1,19 @@
-import React, { useState, ChangeEvent, FormEvent, FC, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent, FC } from "react";
 import { Box, Button, FormControl, FormLabel, Input, FormHelperText, useToast } from "@chakra-ui/react";
-import { LoginUserRequest } from "../../models/login-user-request";
-import { LoginUserRequestMessage } from "../../models/login-user-request-message";
 import { useNavigate } from "react-router-dom";
 
+interface LoginUserRequest{
+  username:string;
+  password:string;
+}
 
+interface LoginUserRequestMessage extends LoginUserRequest{}
 
 export const LoginForm: FC = () => {
   const [formData, setFormData] = useState<Partial<LoginUserRequest>>({});
   const [errorMessage, setErrorMessage] = useState<Partial<LoginUserRequestMessage>>({});
   const toast = useToast();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/profil");
-    }
-  }, [navigate]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,7 +48,6 @@ export const LoginForm: FC = () => {
     event.preventDefault();
     const { username, password } = formData;
 
-    // Validáció ellenőrzése
     validateField("username", username??"");
     validateField("password", password??"");
 
@@ -61,14 +56,14 @@ export const LoginForm: FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/user/login", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        if(response.status==400){
+        if(response.status===400){
           toast({
             title: "Sikertelen belépés",
             description: "A bevitt adatok érvénytelenek",
@@ -76,7 +71,7 @@ export const LoginForm: FC = () => {
             duration: 5000,
             isClosable: true,
           });
-        }else if(response.status==401){
+        }else if(response.status===401){
           toast({
             title: "Sikeres belépés",
             description: "Hibás felhasználónév vagy jelszó",
@@ -103,13 +98,7 @@ export const LoginForm: FC = () => {
       
       navigate("/profil");
     } catch (error:any) {
-      toast({
-        title: "Hiba",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      console.error('Error deleting task:', error);
     }
   };
 
@@ -138,10 +127,10 @@ export const LoginForm: FC = () => {
           />
           <FormHelperText color="red">{errorMessage.password}</FormHelperText>
         </FormControl>
-        <Button type="submit" colorScheme="blue" mt={4}>
+        <Button  width='100%' type="submit" colorScheme="blue" mt={4}>
           Bejelentkezés
         </Button>
-        <Button type="button" colorScheme="teal" mt={4} ml={4} onClick={handleRegistrationRedirect}>
+        <Button width='100%' type="button" colorScheme="teal" mt={4} onClick={handleRegistrationRedirect}>
           Még nincs fiókod? Kattints ide a regisztrációhoz
         </Button>
       </form>

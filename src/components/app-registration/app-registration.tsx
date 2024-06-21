@@ -1,9 +1,17 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Box, Button, FormControl, FormHelperText, FormLabel, Input, useDisclosure } from "@chakra-ui/react";
-import { RegisterUserRequestBody } from "../../models/register-user-request-body";
-import { RegisterUserRequestBodyMessage } from "../../models/register-user-request-body-message";
 import { ModalAlert } from "./modal-alert";
 import { useNavigate } from "react-router-dom";
+
+interface RegisterUserRequestBody{
+  username:string;
+  password:string;
+  passwordConfirm:string;
+  firstName:string;
+  lastName:string;
+}
+
+interface RegisterUserRequestBodyMessage extends RegisterUserRequestBody{}
 
 export const RegistrationForm: FC = () => {
   const [formData, setFormData] = useState<Partial<RegisterUserRequestBody>>({});
@@ -13,13 +21,6 @@ export const RegistrationForm: FC = () => {
   const initialFormData = { username: "", password: "", passwordConfirm: "", firstName: "", lastName: ""};
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/profil");
-    }
-  }, [navigate]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -50,24 +51,22 @@ export const RegistrationForm: FC = () => {
     setErrorMessage((prevErrors) => ({ ...prevErrors, [name]: message }));
   };
 
-
-
   const handleSubmit =async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-        const response = await fetch("http://localhost:5000/user", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
           method: "POST",
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify(formData),
         });
   
         if (!response.ok) {
-          if(response.status==400) {
+          if(response.status===400) {
             setModalContent({ title: "Regisztrációs hiba", message: "A bevitt adatok érvénytelenek" });
-          }else if(response.status==409){
+          }else if(response.status===409){
             setModalContent({ title: "Regisztrációs hiba", message: "A felhasználó már létezik" });
           }else{
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP hiba! status: ${response.status}`);
           }
         }else{
           setModalContent({ title: "Sikeres regisztráció", message: "A regisztráció sikeres volt." });
@@ -88,7 +87,7 @@ export const RegistrationForm: FC = () => {
 
 
   const handleLoginRedirect = () => {
-    navigate("/login"); // Irányítás a bejelentkezési oldalra
+    navigate("/login");
   };
 
   return (
@@ -151,7 +150,7 @@ export const RegistrationForm: FC = () => {
           isDisabled={Object.values(errorMessage).some((error) => error !== "")}>
           Regisztráció
         </Button>
-        <Button type="button" colorScheme="teal" mt={4} ml={4} onClick={handleLoginRedirect}>
+        <Button type="button"  width='100%' colorScheme="teal" mt={4} onClick={handleLoginRedirect}>
           Van fiókod? Kattints ide a bejelentkezéshez
         </Button>
       </form>
