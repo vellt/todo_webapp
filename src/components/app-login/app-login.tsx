@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, FC } from "react";
 import { Box, Button, FormControl, FormLabel, Input, FormHelperText, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../auth/auth-service";
 
 interface LoginUserRequest{
   username:string;
@@ -84,10 +85,8 @@ export const LoginForm: FC = () => {
       }
 
       const data = await response.json();
-      localStorage.setItem("token", data.accessToken);
-      console.log(data.accessToken);
+      AuthService.login(data.accessToken);
       
-
       toast({
         title: "Sikeres bejelentkezés",
         description: "Sikeresen bejelentkezett",

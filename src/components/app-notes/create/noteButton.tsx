@@ -14,7 +14,6 @@ interface NoteButtonProps {
 const NoteButton: FC<NoteButtonProps> = ({ onClick }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
-    const navigate = useNavigate();
 
     const handleNoteCreated = (note: any) => {
         if (note.error) {

@@ -11,6 +11,7 @@ import {
     useToast,
     Text
 } from '@chakra-ui/react';
+import AuthService from '../../../auth/auth-service';
 
 interface DeleteNoteModalProps {
     isOpen: boolean;
@@ -24,7 +25,7 @@ const DeleteNoteModal: FC<DeleteNoteModalProps> = ({ isOpen, onClose, onNoteDele
 
     const handleDelete = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = AuthService.getToken();
             if (!token) {
                 throw new Error('Nem található érvényes token. Kérjük, jelentkezzen be újra.');
             }

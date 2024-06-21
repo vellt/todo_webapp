@@ -13,6 +13,7 @@ import {
     Input,
     FormErrorMessage,
 } from '@chakra-ui/react';
+import AuthService from '../../auth/auth-service';
 
 interface UserProfileFormProps {
     isOpen: boolean;
@@ -63,7 +64,7 @@ const UserProfileForm: FC<UserProfileFormProps> = ({ isOpen, onClose, onProfileU
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${AuthService.getToken()}`
                 },
                 body: JSON.stringify({ firstName, lastName })
             });
