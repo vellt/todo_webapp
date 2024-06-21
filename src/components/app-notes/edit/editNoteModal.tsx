@@ -15,6 +15,7 @@ import {
     Checkbox,
     FormErrorMessage,
 } from '@chakra-ui/react';
+import AuthService from '../../../auth/auth-service';
 
 interface EditNoteModalProps {
     isOpen: boolean;
@@ -32,7 +33,7 @@ const EditNoteModal: FC<EditNoteModalProps> = ({ isOpen, onClose, onNoteEdited, 
     useEffect(() => {
         const fetchNote = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const token = AuthService.getToken();
                 const response = await fetch(`${process.env.REACT_APP_API_URL}/notes/${noteId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`

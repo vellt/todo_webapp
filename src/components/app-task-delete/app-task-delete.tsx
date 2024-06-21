@@ -1,6 +1,7 @@
 
 import React, { FC } from 'react';
 import { Box, Button, Text, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast } from '@chakra-ui/react';
+import AuthService from '../../auth/auth-service';
 
 interface TaskDeleteProps {
   taskid: string; notesid: string;
@@ -12,7 +13,7 @@ const TaskDelete : FC<TaskDeleteProps> = ({ taskid, notesid, onClick }) => {
   const toast = useToast();
 
   const handleDelete = async () => {
-    const token = localStorage.getItem('token');
+    const token = AuthService.getToken();
     if (!token) {
       toast({
         title: "Authentication Error",

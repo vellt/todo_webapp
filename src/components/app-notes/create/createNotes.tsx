@@ -15,6 +15,7 @@ import {
     Checkbox,
     FormErrorMessage,
 } from '@chakra-ui/react';
+import AuthService from '../../../auth/auth-service';
 
 interface CreateNoteModalProps {
     isOpen: boolean;
@@ -66,7 +67,7 @@ const CreateNoteModal: FC<CreateNoteModalProps> = ({ isOpen, onClose, onNoteCrea
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${AuthService.getToken()}`
                 },
                 body: JSON.stringify({ title, color, isFavorite })
             });

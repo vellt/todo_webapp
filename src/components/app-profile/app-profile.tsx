@@ -3,6 +3,7 @@ import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ProfileButton from "../app-profile-data-edit/app-profile-edit-data-button";
 import PasswordChangeButton from "../app-profile-pwd-change/app-profile-pwd-edit-button";
+import AuthService from "../../auth/auth-service";
 
 const ProfilePage: FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -36,7 +37,7 @@ const ProfilePage: FC = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    AuthService.logout();
     navigate("/login");
   };
   const searchList = () =>{

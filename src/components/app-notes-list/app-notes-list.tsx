@@ -10,6 +10,7 @@ import DeleteNoteButton from '../app-notes/delete/deleteNoteButton';
 import './starStyle.css';
 import NoteButton from '../app-notes/create/noteButton';
 import TaskDelete from '../app-task-delete/app-task-delete';
+import AuthService from '../../auth/auth-service';
 
 const SearchNotes: FC = () => {
   const [query, setQuery] = useState('');
@@ -45,7 +46,7 @@ const SearchNotes: FC = () => {
     try {
       const response = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${AuthService.getToken()}`,
         },
       });
 

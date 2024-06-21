@@ -13,6 +13,7 @@ import {
     Input,
     FormErrorMessage,
 } from '@chakra-ui/react';
+import AuthService from '../../auth/auth-service';
 
 interface ChangePasswordFormProps {
     isOpen: boolean;
@@ -79,7 +80,7 @@ const ChangePasswordForm: FC<ChangePasswordFormProps> = ({ isOpen, onClose, onPa
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${AuthService.getToken()}`
                 },
                 body: JSON.stringify({ oldPassword, password, passwordConfirm})
             });
